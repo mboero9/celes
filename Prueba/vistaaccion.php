@@ -44,7 +44,7 @@ if (!$query) {
   </div>
 </nav>
 
-
+<div class="container">
 		
 <div class="form-group">
 		
