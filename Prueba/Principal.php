@@ -1,0 +1,85 @@
+<?php
+$db_host = 'localhost'; // Server Name
+$db_user = 'root'; // Username
+$db_pass = 'Prome2017'; // Password
+$db_name = 'sam'; // Database Name
+
+$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+if (!$conn) {
+	die ('Failed to connect to MySQL: ' . mysqli_connect_error());	
+}
+
+$sql = 'SELECT id, titulo, tipo, origen, proceso, area, estado, subestado, vencida FROM accionesdemejora';
+		
+$query = mysqli_query($conn, $sql);
+
+if (!$query) {
+	die ('SQL Error: ' . mysqli_error($conn));
+}
+?>
+
+<html lang="en">
+<head>
+  <title>SAM</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">SISTEMA DE ACCIONES DE MEJORA</a>
+    </div>
+    <button class="btn btn-danger navbar-btn" onclick="location.href='index.html'">ingresar accion</button> 
+  </div>
+  </nav>
+
+<div class="container">
+
+<h4>HISTORIAL DE ACCIONES</h4>
+			
+		<table class="table table-striped">
+  	
+		<thead>
+		<tr>
+			<th>ACCION</th>
+			<th>TITULO</th>
+			<th>TIPO</th>
+			<th>ORIGEN</th>
+			<th>PROCESO</th>
+			<th>AREA</th>
+			<th>ESTADO</th>
+			<th>SUBESTADO</th>
+			<th>VENCIDA</th>			
+		</tr>
+		</thead>
+		
+				
+		
+		<?php
+
+		while ($row = mysqli_fetch_array($query))
+		{
+			echo '<tr>
+					<td><a href="vistaaccion.php">'.$row['id'].'</a></td>
+					<td>'.$row['titulo'].'</td>
+					<td>'.$row['tipo'].'</td>
+					<td>'.$row['origen'].'</td>
+					<td>'.$row['proceso'].'</td>
+					<td>'.$row['area'].'</td>
+					<td>'.$row['estado'].'</td>
+					<td>'.$row['subestado'].'</td>
+				</tr>';
+
+		}?>
+		</tbody>
+     </table>  
+</div>
+
+</body>
+</html>
+
