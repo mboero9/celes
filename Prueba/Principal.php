@@ -40,7 +40,6 @@ if (!$query) {
 
 <div class="container">
 
-<h4>HISTORIAL DE ACCIONES</h4>
 			
 		<table class="table table-striped">
   	
@@ -54,7 +53,9 @@ if (!$query) {
 			<th>AREA</th>
 			<th>ESTADO</th>
 			<th>SUBESTADO</th>
-			<th>VENCIDA</th>			
+			<th>VENCIDA</th>
+			<th></th>
+			<th></th>
 		</tr>
 		</thead>
 		
@@ -65,7 +66,7 @@ if (!$query) {
 		while ($row = mysqli_fetch_array($query))
 		{
 			echo '<tr>
-					<td><a href="vistaaccion.php">'.$row['id'].'</a></td>
+					<td>'.$row['id'].'</td>
 					<td>'.$row['titulo'].'</td>
 					<td>'.$row['tipo'].'</td>
 					<td>'.$row['origen'].'</td>
@@ -73,8 +74,15 @@ if (!$query) {
 					<td>'.$row['area'].'</td>
 					<td>'.$row['estado'].'</td>
 					<td>'.$row['subestado'].'</td>
+					<td></td>
+					<td><a href="vistaaccion.php"><button onclick="myFunction()">Ver accion</button></a></td>
+					<td><a href="movimientos.php"><button>Cargar movimiento</button>
 				</tr>';
 
+		
+									
+			
+				
 		}?>
 		</tbody>
      </table>  

@@ -9,7 +9,8 @@ if (!$conn) {
 	die ('Failed to connect to MySQL: ' . mysqli_connect_error());	
 }
 
-$sql = 'SELECT id, titulo, tipo, origen, area, proceso, descripcion, objetivo, observacion, estado, subestado, fecha_validacion FROM accionesdemejora WHERE id=57 ';
+$sql = 'SELECT id, titulo, tipo, origen, area, proceso, descripcion, objetivo, 
+		observacion, estado, subestado, fecha_validacion FROM accionesdemejora WHERE id=56';
 
 		
 $query = mysqli_query($conn, $sql);
@@ -38,7 +39,8 @@ if (!$query) {
     <div class="navbar-header">
       <a class="navbar-brand" href="#">ACCION</a>
     </div>
-    <button class="btn btn-danger navbar-btn" onclick="location.href='principal.php'">Volver</button> 
+    <td><button class="btn btn-danger navbar-btn" onclick="location.href='principal.php'">Volver</button></td> 
+	<td><button class="btn btn-danger navbar-btn" onclick="location.href='movimientos.php'">Cargar Movimiento</button></td>
   </div>
 </nav>
 
