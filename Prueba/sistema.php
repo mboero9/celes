@@ -1,7 +1,7 @@
 <?php
 $db_host = 'localhost'; // Server Name
 $db_user = 'root'; // Username
-$db_pass = 'Prome2017'; // Password
+$db_pass = 'Micro2017'; // Password
 $db_name = 'sam'; // Database Name
 
 $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);

@@ -1,43 +1,50 @@
-<?php
-  $page_title = 'Movimientos';
-  require_once('includes/load.php');
-  if (!$session->isUserLoggedIn(true)) { redirect('index.php', false);}
-?>
-<?php include_once('layouts/header.php'); ?>
-<?php
-$db_host = 'localhost'; // Server Name
-$db_user = 'root'; // Username
-$db_pass = 'Micro2017'; // Password
-$db_name = 'sam'; // Database Name
+<?php 
+$host = "localhost";
+$user = "root";
+$pass = "Micro2017";
+$db = "sam";
 
-$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
-if (!$conn) {
-	die ('Failed to connect to MySQL: ' . mysqli_connect_error());	
+$conn = mysqli_connect($host,$user,$pass, $db);
+if(!$conn)
+{
+	die("Connection failed: " . mysqli_connect_error());
 }
-
 $id = $_GET['id'];
 //$sql = "INSERT INTO movimientos (movi) values ('$id')";
 $sql = "SELECT * FROM accionesdemejora where id = '$id'";
-
-
-$sql2 = mysql_query ("UPDATE movimientos SET movi='$id' WHERE accionesdemejora id = '$id'") ;
-//UPDATE 'movimientos' SET 'movi' = '$id' FROM 'movimientos' INNER JOIN 'accionesdemejora' ON movimientos.'$id' = accionesdemejora.'$id'
-//WHERE accionesdemejora.movi = 'movi'
-
-$query = mysqli_query($conn, $sql);
-
-$resultado = mysql_query('SELECT id_movi FROM movimientos ORDER BY id DESC LIMIT 1');
-
-//$resultado2 = mysql_query("UPDATE movimientos SET movi='$id' WHERE movimientos id = '$id'");
-
-
-if (!$query) {
-	die ('SQL Error: ' . mysqli_error($conn));
+if(isset($_POST['accion']))
+{
+	$id_mov = $_POST['id_mov'];
+    $movi = $_POST['movi'];
+    $tipo = $_POST['tipo'];
+    $derivado_a = $_POST['derivado_a'];
+    $descripcion = $_POST['descripcion'];
+    $plazo = $_POST['plazo'];
+	
+	// Since I'm using the newer MySQL v. 5.7.14 I have to addslashes
+$id_mov = mysqli_real_escape_string($connection, $id_mov);
+$movi = mysqli_real_escape_string($connection, $movi);
+$tipo = mysqli_real_escape_string($connection, $tipo);
+$derivado_a = mysqli_real_escape_string($connection, $derivado_a);
+$descripcion = mysqli_real_escape_string($connection, $descripcion);
+$plazo = mysqli_real_escape_string($connection, $plazo);
+	
+	
+	$query = "insert into movimientos (id_mov, movi, tipo, derivado_a, descripcion, plazo) values ('".$id_mov."', '".$movi."', '".$derivado_a."', '".$tipo."', '".$descripcion."', '".$date('Y-m-d H:i:s')."')";
+	
+	$result = mysqli_query($conn, $query);
+	
+        if ($result) {
+            //SUCCESS
+       header('Location: graciasmov.php');
+        } else {
+            //FAILURE
+            die("Database query failed. " . mysqli_error($connection)); 
+            //last bit is for me, delete when done
+        }
+mysqli_close($conn);	
 }
-
-
 ?>
-
 <html lang="en">
 <head>
   <title>Carga de Movimientos</title>
@@ -49,7 +56,11 @@ if (!$query) {
 </head>
 <body>
 
-<div>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ACCION</a>
+    </div>
     <td><button class="btn btn-danger navbar-btn" onclick="location.href='index.php'">Volver</button></td> 
 	<td><button class="btn btn-danger navbar-btn" onclick="location.href='carga_movimientos.php'">Cargar Movimiento</button></td>
   </div>
@@ -57,42 +68,8 @@ if (!$query) {
 
 <div class="container">
 		
-	<form action="procesomov.php" method="post">
+	<form action="" method="post">
     <div class="form-group">
-<!--		
-
-
-  </div>
-	
-	<div class="form-group">
-		<label for="objetivo">Objetivo:</label>
-
-    </div>
-	
-	<div class="form-group">
-		<label for="observacion">Observacion:</label>
-    </div>
-	
-	<div class="form-group">
-		<label for="estado">Estado:</label>
-    </div>
-	
-	<div class="form-group">
-		<label for="subestado">Subestado:</label>
-    </div>	
-	
-	<div class="form-group">
-		<label for="archivo_adjunto">Archivo adjunto:</label>
-	</div>
-	
-	<div class="form-group">
-			<label for="fecha_validacion">Fecha de validacion:</label>
-	</div>
-	
-	   </div>
-
--->
-
 	<?php
 
 		while ($row = mysqli_fetch_array($query))
@@ -104,7 +81,7 @@ if (!$query) {
 			        <td><div class="form-group"><label for="derivado_a">Derivado a:</label><input type="text" class="form-control" name="derivado_a" placeholder="Ingresa derivacion"></div></td>
 					<td><div class="form-group"><label for="descripcion">Descripcion:</label><textarea type="text" class="form-control" name="descripcion" placeholder="Ingresa descripcion" cols="50" rows="7"></textarea></div></td>
 					<td><div class="form-group"><label for="plazo">Plazo:</label><input type="date"></div></td>
-					<td><div class="form-group"><a href="graciasmov.php?id='.$row['id'].'"><button onclick="myFunction()">Cargar Movimiento</button></div></td>
+					<td><div class="form-group"><a href="procesomov.php?id='.$row['id'].'"><button type="submit" class="btn btn-default" >Cargar movimiento</button></div></td>
             
 					</tr>';		
 		}?>

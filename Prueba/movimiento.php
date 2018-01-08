@@ -1,16 +1,31 @@
-<!DOCTYPE html>
 <html>
 <head>
+
+
+  <title>Carga de Movimiento</title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+    
 </head>
 <body>
 
-	<div class="container">
-		<h2>Carga de movimiento</h2>
 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Nuevo Movimiento</a>
+    </div>
+    <button class="btn btn-danger navbar-btn" onclick="location.href='principal.php'">Volver</button> 
+  </div>
+</nav>
+
+
+	<div class="container">
+		
 	<form action="procesomov.php" method="post">
     <div class="form-group">
      
@@ -19,6 +34,40 @@
 	  
     </div> -->
 
+	
+<?php
+$db_host = 'localhost'; // Server Name
+$db_user = 'root'; // Username
+$db_pass = 'Micro2017'; // Password
+$db_name = 'sam'; // Database Name
+
+$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+if (!$conn) {
+	die ('Failed to connect to MySQL: ' . mysqli_connect_error());	
+}
+$id = $_GET['id'];
+//$sql = "SELECT * FROM accionesdemejora where id = '$id'";
+$sql = "SELECT id, titulo, tipo, origen, area, proceso, descripcion, objetivo, 
+		 observacion, estado, subestado, fecha_validacion FROM accionesdemejora WHERE id='$id'";
+
+$sql2 =	"UPDATE titulo FROM accionesdemejora WHERE id='$id'";	
+
+$query = mysqli_query($conn, $sql);
+
+
+if (!$query) {
+	die ('SQL Error: ' . mysqli_error($conn));
+}
+
+
+?>
+	
+	
+	
+	<div class="form-group">
+		<label for="tipo">Accion:<?php echo .$row['id']. ?></a></label>	
+	</div>
+	
 	<div class="form-group">
 		<label for="tipo">Tipo:</label>
 	  		<select type="text" name="tipo" class="form-control">
@@ -65,7 +114,9 @@
 	</div>
 		
 	<div class="form-group">
-	    <button type="submit" class="btn btn-default">Cargar moviemiento</button>
+	    <button type="submit" class="btn btn-default">Cargar movimiento</button>
+		
+
   	</div>
 
 	

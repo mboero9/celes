@@ -1,16 +1,31 @@
-<!DOCTYPE html>
 <html>
 <head>
+
+
+  <title>Carga de Movimiento</title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+    
 </head>
 <body>
 
-	<div class="container">
-		<h2>Carga de movimiento</h2>
 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Nuevo Movimiento</a>
+    </div>
+    <button class="btn btn-danger navbar-btn" onclick="location.href='principal.php'">Volver</button> 
+  </div>
+</nav>
+
+
+	<div class="container">
+		
 	<form action="procesomov.php" method="post">
     <div class="form-group">
      
@@ -19,6 +34,29 @@
 	  
     </div> -->
 
+	
+<?php
+$enlace = mysql_connect('localhost', 'root', 'Micro2017');
+if (!$enlace) {
+    die('No se pudo conectar: ' . mysql_error());
+}
+if (!mysql_select_db('sam')) {
+    die('No se pudo seleccionar la base de datos: ' . mysql_error());
+}
+$resultado = mysql_query('SELECT id FROM accionesdemejora ORDER BY id DESC LIMIT 1');
+
+$id = $_GET['id'];
+//$sql = "SELECT * FROM accionesdemejora where id = '$id'";
+$sql = "SELECT id, titulo, tipo, origen, area, proceso, descripcion, objetivo, 
+		 observacion, estado, subestado, fecha_validacion FROM accionesdemejora WHERE id='$id'";
+		 
+if (!$resultado) {
+    die('No se pudo consultar:' . mysql_error());
+}
+	
+	echo '<div class="form-group"><label for="observacion">Accion N°: '.$row['id'].'</div>'	
+?>	
+	
 	<div class="form-group">
 		<label for="tipo">Tipo:</label>
 	  		<select type="text" name="tipo" class="form-control">
@@ -65,7 +103,7 @@
 	</div>
 		
 	<div class="form-group">
-	    <button type="submit" class="btn btn-default">Cargar moviemiento</button>
+	    <button type="submit" class="btn btn-default">Cargar movimiento</button>
   	</div>
 
 	

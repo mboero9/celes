@@ -1,7 +1,7 @@
 <?php 
 $dbhost = "localhost";
 $dbuser = "root";
-$dbpass = "Prome2017";
+$dbpass = "Micro2017";
 $dbaccion = "sam";
 $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbaccion);
 
@@ -48,7 +48,7 @@ $subestado = mysqli_real_escape_string($connection, $subestado);
 
 //This should retrive HTML form data and insert into database
 $query  = "INSERT INTO accionesdemejora (id, titulo, tipo, origen, area, proceso, descripcion, objetivo, observacion, estado, subestado, fecha_validacion) 
-            VALUES ('".$_POST["id"]."','".$_POST["titulo"]."','".$_POST["tipo"]."','".$_POST["origen"]."','".$_POST["area"]."','".$_POST["proceso"]."','".$_POST["descripcion"]."','".$_POST["objetivo"]."','".$_POST["observacion"]."','".$_POST["estado"]."','".$_POST["subestado"]."','".$_POST["fecha_validacion"]."')";
+            VALUES ('".$_POST["id"]."','".$_POST["titulo"]."','".$_POST["tipo"]."','".$_POST["origen"]."','".$_POST["area"]."','".$_POST["proceso"]."','".$_POST["descripcion"]."','".$_POST["objetivo"]."','".$_POST["observacion"]."','".$_POST["estado"]."','".$_POST["subestado"]."','".date('Y-m-d H:i:s')."')";
 
         $result = mysqli_query($connection, $query);
         //Test if there was a query error

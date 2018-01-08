@@ -1,10 +1,4 @@
 <?php
-  $page_title = 'Movimientos';
-  require_once('includes/load.php');
-  if (!$session->isUserLoggedIn(true)) { redirect('index.php', false);}
-?>
-<?php include_once('layouts/header.php'); ?>
-<?php
 $db_host = 'localhost'; // Server Name
 $db_user = 'root'; // Username
 $db_pass = 'Micro2017'; // Password
@@ -22,6 +16,8 @@ $sql = "SELECT id, titulo, tipo, origen, area, proceso, descripcion, objetivo,
 $sql2 =	"UPDATE titulo FROM accionesdemejora WHERE id='$id'";	
 
 $query = mysqli_query($conn, $sql);
+
+$resultado = mysql_query('SELECT id FROM accionesdemejora ORDER BY id DESC LIMIT 1');
 
 
 if (!$query) {
@@ -42,14 +38,20 @@ if (!$query) {
 </head>
 <body>
 
-
-
-    <td><button class="btn btn-danger navbar-btn" onclick="location.href='index.php'">Volver</button></td> 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ACCION</a>
+    </div>
+    <td><button class="btn btn-danger navbar-btn" onclick="location.href='principal.php'">Volver</button></td> 
 	<td><button class="btn btn-danger navbar-btn" onclick="location.href='movimientos.php'">Cargar Movimiento</button></td>
- 
-
+  </div>
+</nav>
 
 <div class="container">
+		
+	<form action="procesomov.php" method="post">
+    <div class="form-group">
 <!--		
 
 
@@ -87,19 +89,14 @@ if (!$query) {
 		while ($row = mysqli_fetch_array($query))
 		{
 			echo '<tr>
-					<td><div class="form-group"><label for="observacion">Observacion:'.$row['id'].'</div></td>
-					<td><div class="form-group"><label for="titulo">Titulo:'.$row['titulo'].'</label><a href="vistaaccion.php?id='.$row['titulo'].'"></a></div></td>
-					<td><div class="form-group"><label for="tipo">Tipo:'.$row['tipo'].'</label></div></td>
-					<td><div class="form-group"><label for="origen">Origen:'.$row['origen'].'</label></div></td>
-					<td><div class="form-group"><label for="proceso">Proceso:'.$row['proceso'].'</label></div></td>
-					<td><div class="form-group"><label for="estado">Estado:'.$row['estado'].'</label></div></td>
-					<td><div class="form-group"><label for="subestado">Subestado:'.$row['subestado'].'</label></div></td>
-			
-				</tr>';
-	
+					<td><div class="form-group"><label for="observacion">Accion N°: '.$row['id'].'</div></td>
+					<td><div class="form-group"><label for="derivado_a">Derivado a:</label><input type="text" class="form-control" name="derivado_a" placeholder="Ingresa derivacion"></div></td>
+					<td><div class="form-group"><label for="descripcion">Descripcion:</label><textarea type="text" class="form-control" name="descripcion" placeholder="Ingresa descripcion" cols="50" rows="7"></textarea></div></td>
+					<td><div class="form-group"><label for="plazo">Plazo:</label><input type="date"></div></td>
+					<td><div class="form-group"><button type="submit" class="btn btn-default">Cargar movimiento</button></div></td>
+					</tr>';
+		
 		}?>
-
-
-			
+</form>
 </body>
 </html>

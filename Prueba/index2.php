@@ -1,6 +1,9 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <title>SAM</title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -8,8 +11,18 @@
 </head>
 <body>
 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Acciones</a>
+    </div>
+    <button class="btn btn-danger navbar-btn" onclick="location.href='index.php'">Volver</button> 
+  </div>
+  </nav>
+<body>
+
 	<div class="container">
-		<h2>SISTEMA DE ACCIONES DE MEJORA</h2>
+		<h2></h2>
 
 	<form action="proceso.php" method="post">
     <div class="form-group">
@@ -100,7 +113,6 @@
 	<div class="form-group">
 	    <button type="submit" class="btn btn-default">Cargar accion</button>
   	</div>
-
 	
 </form>
 	

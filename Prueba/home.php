@@ -1,4 +1,11 @@
 <?php
+  $page_title = 'Home SAM';
+  require_once('includes/load.php');
+  if (!$session->isUserLoggedIn(true)) { redirect('index.php', false);}
+  page_require_level(1);
+?>
+<?php include_once('layouts/header.php'); ?>
+<?php
 $db_host = 'localhost'; // Server Name
 $db_user = 'root'; // Username
 $db_pass = 'Micro2017'; // Password
@@ -9,7 +16,7 @@ if (!$conn) {
 	die ('Failed to connect to MySQL: ' . mysqli_connect_error());	
 }
 
-$sql = 'SELECT id, titulo, tipo, origen, proceso, area, estado, subestado, vencida FROM accionesdemejora';
+$sql = 'SELECT id, titulo, tipo, origen, proceso, area, estado, subestado, fecha_validacion FROM accionesdemejora';
 		
 $query = mysqli_query($conn, $sql);
 
@@ -26,17 +33,11 @@ if (!$query) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">SISTEMA DE ACCIONES DE MEJORA</a>
-    </div>
-    <button class="btn btn-danger navbar-btn" onclick="location.href='index.php'">ingresar accion</button> 
-  </div>
-  </nav>
+
 
 <div class="container">
 
@@ -66,6 +67,7 @@ if (!$query) {
 		while ($row = mysqli_fetch_array($query))
 		{
 			echo '<tr>
+			        <div style="max-height: 100px; max-width: 100px; width: 100px; overflow: auto;">
 					<td>'.$row['id'].'</td>
 					<td>'.$row['titulo'].'</td>
 					<td>'.$row['tipo'].'</td>
@@ -74,12 +76,12 @@ if (!$query) {
 					<td>'.$row['area'].'</td>
 					<td>'.$row['estado'].'</td>
 					<td>'.$row['subestado'].'</td>
-					<td></td>
+					<td>'.$row['fecha_validacion'].'</td>
 					<td><a href="vistaaccion.php?id='.$row['id'].'"><button onclick="myFunction()">Ver accion</button></a></td>
 					<td><a href="movimientos.php?id='.$row['id'].'"><button onclick="myFunction()">Cargar Movimiento</button></a></td>
-			
+					<td><a href="movimientosxaccion.php?id='.$row['id'].'"><button onclick="myFunction()">Ver Movimientos</button></a></td>	
+</div>					
 				</tr>';
-	
 		}?>
 		</tbody>
      </table>  
@@ -88,3 +90,4 @@ if (!$query) {
 </body>
 </html>
 
+<?php include_once('layouts/footer.php'); ?>
