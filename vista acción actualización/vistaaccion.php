@@ -1,8 +1,20 @@
 <?php
+  $page_title = 'Vista Accion';
+  require_once('includes/load.php');
+?>
+<?php
+
+ page_require_level(1);
+
+ $all_users = find_all_user();
+?>
+<?php include_once('layouts/header.php'); ?>
+
+<?php
 
 $db_host = 'localhost'; // Server Name
 $db_user = 'root'; // Username
-$db_pass = 'Prome2017'; // Password
+$db_pass = 'Micro2017'; // Password
 $db_name = 'sam'; // Database Name
 
 $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
@@ -32,14 +44,11 @@ if (!$query) {
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">ACCION</a>
-    </div>
+
+      <a class="navbar-brand" href="#"></a>
+
     <td><button class="btn btn-danger navbar-btn" onclick="location.href='index.php'">Volver</button></td> 
-	<td><button class="btn btn-danger navbar-btn" onclick="location.href='movimientos.php'">Cargar Movimiento</button></td>
-	<td><button class="btn btn-danger navbar-btn" onclick="location.href='actualizacion.php'">Actualizar Estado</button></td> 
+
   </div>
 </nav>
 

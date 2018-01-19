@@ -1,8 +1,20 @@
 <?php
+  $page_title = 'Actualiza Accion';
+  require_once('includes/load.php');
+?>
+<?php
+
+ page_require_level(1);
+
+ $all_users = find_all_user();
+?>
+<?php include_once('layouts/header.php'); ?>
+
+<?php
 
 $db_host = 'localhost'; // Server Name
 $db_user = 'root'; // Username
-$db_pass = 'Prome2017'; // Password
+$db_pass = 'Micro2017'; // Password
 $db_name = 'sam'; // Database Name
 
 $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
@@ -11,8 +23,11 @@ if (!$conn) {
 }
 
 $id = $_GET['id'];
+echo "<h3>Accion N°: $id</h3>";
 
 ?>
+
+
 
 
 
@@ -26,14 +41,9 @@ $id = $_GET['id'];
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">ACCION</a>
     </div>
     <td><button class="btn btn-danger navbar-btn" onclick="location.href='index.php'">Volver</button></td> 
-	<td><button class="btn btn-danger navbar-btn" onclick="location.href='movimientos.php'">Cargar Movimiento</button></td>
+
   </div>
 </nav>
 
@@ -47,6 +57,11 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
     font: normal 13px Arial, sans-serif;
+	position: absolute;
+	width: 200px;
+    height: 200px;
+    left: 300px;
+    top: 140px;
 }
 
 
@@ -58,44 +73,63 @@ td {
 }
 .zui-table-vertical tbody td {
     border-top: none;
-    border-bottom: none;
+    border-bottom: none;	
+}
+button {
+	position: absolute;
+    left: 300px;
+    top: 350px;
+
 }
 
-
-
-
 </style>
+<?php
+{
+	(isset($_POST["estado"])) ? $estado = $_POST["estado"] : $estado=1;
+    (isset($_POST["suestado"])) ? $subestado = $_POST["subestado"] : $subestado=1;
+	if (isset($_POST['submit'])) {
+    
+    $sql = "UPDATE accionesdemejora SET estado = '".$_POST["estado"]."', subestado = '".$_POST["subestado"]."', fecha_validacion = '".date('Y-m-d H:i:s')."' WHERE id='$id'";
+     $result = $conn->query($sql);  
+	   if ($conn->query($sql) === TRUE) {
+        echo "<script>location.href='graciasupdate.php';</script>";
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+  }
+	
 
+?>
 <div class="container">
 
 
-<form action="procesoactualizacion.php" method="post">
+<form action="#" method="post">
 	<table>
-				
+		<tbody>		
 	<tr><td>Estado</td> <td><select type="text" name="estado" class="form-control">
-		<option value="Abierta">Abierta</option> 
-		<option value="Presentada">Presentada</option> 
-		<option value="Cerrada">Cerrada</option>
+		<option <?php if ($estado == abierta ) echo 'seleccionar' ; ?>value="abierta">Abierta</option> 
+		<option <?php if ($estado == presentada ) echo 'seleccionar' ; ?>value="presentada">Presentada</option> 
+		<option <?php if ($estado == cerrada ) echo 'seleccionar' ; ?>value="cerrada">Cerrada</option>
 		</select></td></tr>
 	<tr><td>Subestado</td> <td><select type="text" name="subestado" class="form-control">
-		<option value="Aprobada">Aprobada</option> 
-		<option value="En ejecucion">En ejecucion</option> 
-		<option value="En estudio">En estudio</option>
-		<option value="Implementada">Implementada</option> 
-		<option value="Rechazada">Rechazada</option> 
-		<option value="Exitosa">Exitosa</option>
-		<option value="Sin exito">Sin exito</option>			
+		<option <?php if ($subestado == aprobada ) echo 'seleccionar' ; ?>value="aprobada">Aprobada</option> 
+		<option <?php if ($subestado == ejecucion ) echo 'seleccionar' ; ?>value="ejecucion">En ejecucion</option> 
+		<option <?php if ($subestado == estudio ) echo 'seleccionar' ; ?>value="estudio">En estudio</option>
+		<option <?php if ($subestado == implementada ) echo 'seleccionar' ; ?>value="implementada">Implementada</option> 
+		<option <?php if ($subestado == rechazada ) echo 'seleccionar' ; ?>value="rechazada">Rechazada</option> 
+		<option <?php if ($subestado == exitosa ) echo 'seleccionar' ; ?>value="exitosa">Exitosa</option>
+		<option <?php if ($subestado == sin_exito ) echo 'seleccionar' ; ?>value="sin exito">Sin exito</option>			
 		</select></td></tr>
-	<tr><td>Fecha de validacion</td><td><input type="date"></td></tr>
+	<tr><td>Fecha de validacion</td><td><input name="date" type="date"></td></tr>
+	
 		</tbody>
+		<tr>
+<td colspan="2"><input type="submit" name="submit" value="Actualizar" class="btnSubmit"></td>
+</tr>
 		</table>
 		
 </form>
-		
-	<div class="form-group">
-	    <a href="procesoactualizacion.php?id='.$row['id'].'"> </a><button type="submit" value=" echo id='.$row['id'].'" class="btn btn-default">Cargar Actualizacion</button>
-  	</div>	
-	
-	
+<?php 
 
-	
+}
+?>
